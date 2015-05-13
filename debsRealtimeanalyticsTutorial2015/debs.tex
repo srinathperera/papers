@@ -308,7 +308,7 @@ Following are some of the examples of trends.
 \item Rise, Fall
 \item Turn (switch from rise to a fall)
 \item Outliers
-\item Complex trends like ``Triple Bottom" and ``Cup and Handle".
+\item Complex trends like ``Triple Bottom" and ``Cup and Handle"~\cite{bulkowski2011encyclopedia}.
 \end{enumerate}
 
 These trends are useful in a wide variety of use cases such as 
@@ -330,17 +330,17 @@ Idea of this pattern, which is sometimes called ``Lambda Architecture", is to us
 Main idea of the pattern is to detect a condition that suggests some anomaly, and further analyze it using historical data.  This pattern is used with the use cases where we cannot analyze all the data with full detail. Instead we analyze anomalous cases in full detail. Following are few examples. 
 
 \begin{enumerate}
-\item Use basic rules to detect Fraud (e.g., large transaction), then pull out all transactions done against that credit card for larger time period (e.g. 3 months data) from batch pipeline and run a detailed analysis 
+\item Use basic rules to detect Fraud (e.g., large transaction), then pull out all transactions done against that credit card for larger time period (e.g., 3 months data) from batch pipeline and run a detailed analysis 
 \item While monitoring weather, detect conditions like high temperature or low pressure in a given region, and then start a high resolution localized forecast on that region. 
-\item Detect good customers, for example through expenditure of more than $1000\$$ within a month, and then run a detailed model to decide potential of offering a deal. 
+\item Detect good customers, for example through expenditure of more than $\$1000$ within a month, and then run a detailed model to decide potential of offering a deal. 
 \end{enumerate}
 
 \subsection{Pattern 12: Using a Model} 
 Idea is to train a model (often a Machine Learning model), and then use it with the Realtime pipeline to make decisions. For example, you can build a model using R, export it as PMML (Predictive Model Markup Language) and use it within your realtime pipeline. 
 
-Following are few examples
+Following are few examples.
 \begin{enumerate}
-\item Fraud Detections 
+\item Fraud Detection
 \item Segmentation 
 \item Predict next value 
 \item Predict Churn 
@@ -363,7 +363,7 @@ There are many use cases where we need to control something online. The classica
 \hline
 & Coral8 patterns & Esper	& Cugola	& EPTS Reference Arch \\ \hline
 Pattern 1: Preprocessing &	yes &	yes &	yes &	yes \\ \hline
-Pattern 2: Alerts, thresholds & & yes &  & \\ \hline		
+Pattern 2: Alerts and Thresholds & & yes &  & \\ \hline		
 Pattern 3: Simple counting and Counting with Windows & 	yes &	yes &	yes &	yes \\ \hline
 Pattern 4: Joins &	yes &	yes &	yes	& yes \\ \hline
 Pattern 5: Data Correlation, Missing and Erroneous Data & & yes	& yes	& yes \\ \hline
@@ -379,23 +379,23 @@ Pattern 13: Online Control & & & & \\ \hline
 \end{center}
 \end{table*}
 
-Earlier efforts have identified common streaming realtime operators and patterns. For an instance, most Complex Event Processing technologies have adopted a SQL like query languages thus adopting operators from SQL. They, however, added more operators like windows and temporal pattern recognition to better handle the time dimension. Most such tools supports patterns such as filters, transforms, windows, joins, and temporal event patterns. Cugola and Margara~\cite{cugolaprocessing} have defined a classification of these operators and done an extensive survey of different tools. However, as shown by table 1, the paper focuses on basic abstract operators as oppose to higher-level patterns. 
+Earlier efforts have identified common streaming realtime operators and patterns. For an instance, most Complex Event Processing technologies have adopted a SQL like query languages thus adopting operators from SQL. They, however, added more operators like windows and temporal pattern recognition to better handle the time dimension. Most such tools support patterns such as filters, transforms, windows, joins, and temporal event patterns. Cugola and Margara~\cite{cugolaprocessing} have defined a classification of these operators and done an extensive survey of different tools. However, as shown by table 1, the paper focuses on basic abstract operators as oppose to higher-level patterns. 
 
-Technical community has also discussed this issue several times. For an example, Esper provides about 50 patterns in their solution patterns document~\cite{esperPatterns}. Although the document does not try to cover all categories, it provides insight into common problems faced by streaming query developers. Most Esper patterns are very specific and defined on a narrow use cases. However, since the patterns have grown from user feedback over time, they provide a good indication of problems people trying to solve with event processing systems. 
+Technical community has also discussed this issue several times. For an example, Esper provides about 50 patterns in their solution patterns document~\cite{esperPatterns}. Although the document does not try to cover all categories, it provides insight into common problems faced by streaming query developers. Most Esper patterns are very specific and defined on narrow use cases. However, since the patterns have grown from user feedback over time, they provide a good indication of problems people trying to solve with event processing systems. 
 
-Coral8 white paper~\cite{Coral810patterns} discusses ten patterns. As Table 1 depicts most of them matches directly to the patterns discussed in this tutorial. Among ones that did not match, we considered in-memory caching as an implementation detail of database mapping (Pattern 6). We considered hierarchical processing as a preprocessing step in generating events. Also we considered dynamic queries not as a pattern, but as an implementation detail on how query interface between users and the system is constructed. 
+Coral8 white paper~\cite{Coral810patterns} discusses ten patterns. As Table 1 depicts most of them matche directly to the patterns discussed in this tutorial. Among ones that did not match, we considered in-memory caching as an implementation detail of database mapping (Pattern 6). We considered hierarchical processing as a preprocessing step in generating events. Also we considered dynamic queries not as a pattern, but as an implementation detail on how query interface between users and the system is constructed. 
 
-Event Processing Technical Society's (EPTS) reference architecture~\cite{eptsRefArch} comes very close to patterns we discussed in this tutorial. In contrast to other efforts, the EPTS reference architecture identifies higher-level patterns such as tracking, prediction and learning in addition to low-level operators that comes from SQL like languages. Allowing for wider interpretations, EPTS patterns can contains almost all patterns we discuss. Notable exception is streaming patterns that incorporate batch processing, which is a idea developed much later. 
+Event Processing Technical Society's (EPTS) reference architecture~\cite{eptsRefArch} comes very close to the patterns we discussed in this tutorial. In contrast to other efforts, the EPTS reference architecture identifies higher-level patterns such as tracking, prediction and learning in addition to low-level operators that comes from SQL like languages. Allowing for wider interpretations, EPTS patterns can contain almost all patterns we discuss. Notable exception is streaming patterns that incorporate batch processing, which is an idea developed much later. 
 
-Patterns we introduced incorporate basic complex event processing patterns that comes from SQL like languages as well as the higher-level use cases like tracking and detecting trends.  They are defined with more focus on the user rather than with the than mechanics of processing implementation. For example, we called the first two patterns ``Preprocessing and Alerts" instead of calling it a filter. Following Table 1 shows how each of above approaches matches the patterns introduced in this tutorial. 
+Patterns we introduced incorporate basic complex event processing patterns that come from SQL like languages as well as the higher-level use cases like tracking and detecting trends.  They are defined with more focus on the user rather than with the mechanics of processing implementation. For example, we called the first two patterns ``Preprocessing and Alerts" instead of calling it a filter. Following Table 1 shows how each of above approaches matches the patterns introduced in this tutorial. 
 
 \section{Pattern Implementations}  
 
-In this section we will discuss how above patterns can be implemented with Apache Storm~\cite{storm} and WSO2 Complex Event Processor~\cite{siddhi}. 
+In this section we will discuss how the above patterns can be implemented with Apache Storm~\cite{storm} and WSO2 Complex Event Processor~\cite{siddhi}. 
 
-Apache Storm is a distributed stream processing engine, which allows users to write queries (topologies as per Apache Storm terminology) as Javabeans and deploy them in to a cluster. It uses components named Spouts for fetching events from external systems and Bolts for processing those events. Since Spouts and Bolts are written as Java classes it allows us to implement almost any use case. In this tutorial we are omitting the implementation details of Spouts because it is same for all the use cases and depends on the transports and the protocol used for retrieving the events. 
+Apache Storm is a distributed stream processing engine, which allows users to write queries (topologies as per Apache Storm terminology) as JavaBeans and deploy them into a cluster. It uses components named Spouts for fetching events from external systems and Bolts for processing those events. Since Spouts and Bolts are written as Java classes it allows us to implement almost any use case. In this tutorial we are omitting the implementation details of Spouts because it is same for all the use cases and depends on the transports and the protocol used for retrieving the events. 
 
-As the Complex Event Processing Server, we will use WSO2 CEP. It accepts queries via SQL like query language and support filters, transformations, windows, joins, temporal event patterns, and interacting with databases with data streams. At the distributed mode, WSO2 CEP can compile a given query to set of queries that run as an Apache Storm topology where each Bolt would run a WSO2 CEP engine as a java library. We call this java Library as Siddhi~\cite{siddhilib}.
+As the Complex Event Processing Server, we will use WSO2 CEP. It accepts queries via SQL like query language and supports filters, transformations, windows, joins, temporal event patterns, and interacting with databases with data streams. At the distributed mode, WSO2 CEP can compile a given query to set of queries that run as an Apache Storm topology where each Bolt would run a WSO2 CEP engine as a Java library. We call this Java Library as Siddhi~\cite{siddhilib}.
 
 Following is an example query supported by WSO2 CEP. 
 
@@ -409,14 +409,14 @@ insert into outputStockStream
 
 Similar to Apache Storm, for simplicity, we are going to omit the implementation details of event retrieval and stream management configurations with WSO2 CEP as well. 
 
-Apache Storm based implementation of the above described patterns needs writing Java code. For brevity and readers better understanding, we will use pseudo to explain the implementations. 
+Apache Storm based implementation of the above described patterns needs writing Java code. For brevity, we will use pseudocode to explain the implementations. 
 
 Each Apache Storm query is specified as one or more bolts. Each bolt is represented as a method called PROCESS(E) where E is the event. E.attribute-name refers to a specific attribute of the event. Method NEW\_E() creates a new event. Also there is a special method SEND2\_NEXT\_PROCESSOR (E) that sends the event to next processor (bolt) in the topology.  We will also use few utility methods and make their function obvious by the name. Apache Storm decides next processor based on the topology. 
 
 While explaining the WSO2 CEP based solution, we will use Siddhi Query language, which is the SQL like event query language used by WSO2 CEP. 
 
 
-\subsection{Implementing Preprocessing}
+\subsection{Implementation of Preprocessing}
 
 For the first pattern, lets consider a StockQuote Stream with attributes transactionAmount, symbol, price, volume, and a timeout. In this example, we filter all transactions greater than 100 and then transform the stream to output only the symbol and the last transactionAmount attributes of that stock. 
 
@@ -455,7 +455,7 @@ insert into outputStockStream
 
 
 
-\subsection{Implementing Alerts and Thresholds}
+\subsection{Implementation of Alerts and Thresholds}
 This pattern can be implemented using the same techniques as filters in the first pattern. We have identified Alerts as a different pattern because the user's intent is different in the two patterns. 
 
 
@@ -490,14 +490,14 @@ insert into lastMinStocksOfGOOG;
 \end{lstlisting}
 
 
-Here we are implementing a 60 seconds batch window and we use it to generate the the totalAmount of the GOOG stocks that were trading over the last hour. However, there are many other types of windows available:  sliding time windows, length batch window, length sliding window, unique window, first unique window etc.  We will not discuss them in detail, but most Complex Event Processing engines, including WSO2 CEP, have support for those windows. 
+Here we are implementing a 60 seconds batch window and we use it to generate the totalAmount of the GOOG stocks that were trading over the last hour. However, there are many other types of windows available:  sliding time windows, length batch window, length sliding window, unique window, first unique window, etc.  We will not discuss them in detail, but most Complex Event Processing engines, including WSO2 CEP, have support for those windows. 
 
-\subsection{Implementing Joining Event Streams}
+\subsection{Implementation of Event Streams Joins}
 When joining multiple streams, we can not join the current event of a particular stream against all the events that have arrived so far from the other stream. This is because it is expensive to hold all the events in memory or even at an external storage. Therefore, with realtime streaming use cases, we store only a predefined amount of events (based on time, length or via other criteria) and match against those. For a successful implementation of the join pattern, we will need a criteria for storing historic events and the ability to match the conditions against that dynamic storage. 
 
 For this example, lets consider the football game described with the pattern where we join the ball and player streams to detect a kick. The following pseudo code explains the Storm implementation. 
 
-For this use case, we assume there are two window implementation that keeps events. 
+For this use case, we assume there are two window implementations that can be used to retain events. 
 
 \begin{lstlisting}[mathescape, showstringspaces=false]
 BALL_W = NEW_LENGTH_WINDOW(1); 
@@ -528,11 +528,11 @@ END
 
  
 
-This implementation keeps two windows, one for events from the ball stream and one for the events from player stream. Whenever, we receives an event we update the corresponding window and search for a matching event in the other window based on the given condition. Any matches we send forward. 
+This implementation keeps two windows, one for events from the ball stream and one for the events from player stream. Whenever, we receive an event we update the corresponding window and search for a matching event in the other window based on the given condition. Any events that matches we send forward to the next processor. 
 
 If windows could hold a large number of events, we would need to build indexes to make FIND\_EVENTS faster. 
 
-Following query shows the same use case implemented with Complex Event processing.  
+Following query shows the same use case implemented with Complex Event Processing.  
 
 
 \begin{lstlisting}[mathescape]
@@ -547,9 +547,9 @@ insert into ballKickSteam;
 
 
 
-\subsection{Implementing Data Correlation, Missing Events and Erroneous Data}
+\subsection{Implementation of Data Correlation, Missing Events and Erroneous Data}
 
-We can implement data correlation using same techniques as Pattern 4. However, detecting missing events and erroneous data is much more complex. Here we will look at how we can implement detection of missing events in a data stream. As the example usecase, we detect the customer requests that have not been responded within 1 hour of it's reception.  
+We can implement data correlation using same techniques as Pattern 4. However, detecting missing events and erroneous data is much more complex. Here we will look at how we can implement detection of missing events in a data stream. As the example use case, we detect the customer requests that have not been responded within 1 hour of it's reception.  
 
 
 \begin{lstlisting}[mathescape, showstringspaces=false]
@@ -570,7 +570,7 @@ END
 \end{lstlisting}
 
 
-Here we are keep a list of requests and remove them when the request has been served (detected via ResponseEvent). If request is in the list for more than 1 hour, we raise an event after it is expired. 
+Here we keep a list of requests and remove them when the request has been served (detected via ResponseEvent). If request is in the list for more than 1 hour, we raise an event after it is expired. 
 
 CEP query for the same use case is given below. 
 
@@ -588,7 +588,7 @@ having r2.id == null
 
 
 
-\subsection{Implementing Interacting with Databases}
+\subsection{Implementation of Databases Interactions}
 We can implement Pattern 6 with storm using the code similar to Pattern 4 with calls to a database instead of storing and searching for data in-memory. Furthermore, it will only have to keep events for one stream. 
 
 For example, lets assume we want to retrieve the customer age from a database using customer ID attribute as the key and enrich the event with customer's age. 
@@ -606,7 +606,7 @@ END
 
 
 
-In WSO2 CEP, for merging events with data in a database, or for collecting and updating them based on conditions we use a construct called Event Table. This allows siddhi to represent historic data stored in a database as a table allowing it to be combined with active event streams at realtime. 
+In WSO2 CEP, for merging events with data in a database, or for collecting and updating them based on conditions we use a construct called Event Table. This allows Siddhi to represent historic data stored in a database as a table allowing it to be combined with active event streams at realtime. 
 
 Let us implement the earlier use cases with CEP.
 
@@ -622,7 +622,7 @@ insert into fraudDetectionStream
 
 Here event table matches data in a database to a window, and we can join against the window as any window.
 
-\subsection{Implementing Detecting Temporal Event Sequences and Patterns}
+\subsection{Implementation of Temporal Event Sequences and Patterns}
 
 Implementing sequences and patterns with Storm is complex. Hence let us look at a simple  fraud detection use case where we detect a small transaction (amount less than \$50) from a credit card followed by a very large transaction (amount larger than \$10000) from the same card within a day. 
 
@@ -648,9 +648,9 @@ END
 \end{lstlisting}  
  
 
-Above code is to detect two events that follow each other. In the general case, the pattern can be expressed as a regular expression and the system need to simulate a state machine to implement them. Moreover, system needs to expire events to avoid pattern collecting all small transaction events and running out of memory. These details we do not discuss with Apache Storm. 
+Above code detects two events that follow each other. In the general case, the pattern can be expressed as a regular expression and the system needs to simulate a state machine to implement them. Moreover, the system needs to expire events to avoid pattern collecting all small transaction events and running out of memory. We will not discuss the implementation of these details in this paper. 
 
-At the meantime  temporal sequences and patterns can be easily implemented in CEP systems as they are provided as a out of the box constructs. The following segment of Siddhi query explains the above scenario.
+At the meantime  temporal sequences and patterns can be easily implemented in CEP systems as they are provided as out of the box constructs. The following segment of Siddhi query explains the above scenario.
 
 
 \begin{lstlisting}[mathescape, showstringspaces=false]
@@ -666,11 +666,11 @@ insert into fraudDetectionStream
 Here `->' denotes `followed by', meaning after the first event its corresponding next event can appear after any number of other events. 
 
 
-\subsection{Implementing Detecting Trends}
+\subsection{Implementation of Trend Detection}
 
-Detecting trends is one of the key streaming analytics use cases. Trends are widely in both Stock markets and in Algorithmic trading. For example, stock market traders have identified a set of chart patterns like triple Bottom pattern~\cite{bulkowski2011encyclopedia} that are significant behaviors in the market that are actionable. 
+Detecting trends is one of the key streaming analytics use cases. Trends are widely used in both Stock markets and algorithmic trading. For example, stock market traders have identified chart patterns like Triple Bottom pattern~\cite{bulkowski2011encyclopedia} that are significant behaviors in the market that are actionable. 
 
-Identifying even basic trends like a peak require us to implement a state machine depicted in Figure~\ref{fig:q4}. We will not implement this usecase with Storm as it is complicated. 
+Identifying even basic trends like a peak require us to implement a state machine depicted in Figure~\ref{fig:q4}. We will not implement this use case with Storm as it is complicated. 
 
 \begin{figure}[!htbp]
 \centering
@@ -679,7 +679,7 @@ Identifying even basic trends like a peak require us to implement a state machin
 \label{fig:q4}
 \end{figure}
 
-However, if we ignore the noise, we can easily detect most trends as a temporal event pattern with CEP. For example, the following query identifies a peak in GOOG stock price. 
+However, if we ignore the noise, we can easily detect most trends as temporal event patterns using CEP. For example, the following query identifies a peak in GOOG stock price. 
 
 
 \begin{lstlisting}[mathescape, showstringspaces=false]
@@ -693,7 +693,7 @@ select a2[last].price as peekPrice,
 	a3.price as currentPrice
 \end{lstlisting} 
 
-If we need to process the above for all the symbols independently then we have to partition the stockStream and process the events in parallel and this can be implemented as below.
+If we need to process the above for all the symbols independently, then we have to partition the stockStream and process the events in parallel and this can be implemented as below.
 
 \begin{lstlisting}[mathescape, showstringspaces=false]
 partition with ( symbol of stockStream)
@@ -706,11 +706,11 @@ begin
 end;
 \end{lstlisting} 
 
-However, a real life trend detection needs to be resilient against the noise. For an example, Rashmi Arachchi et al.~\cite{chartPatterns} used kernel regression to detect maxima and minimas and then applied temporal events patterns to those maximas and minimas to identify high level chart patterns. 
+However, a real life trend detection needs to be resilient against the noise. For an example, Rashmi Arachchi et al.~\cite{chartPatterns} used kernel regression to detect maxima and minimas and then applied temporal events patterns to those maximas and minimas to identify high-level chart patterns. 
 
 \subsection{Implementing the Same Query in Batch and Realtime pipelines}
 
-This pattern is often implemented combining a batch-processing tool like MapReduce with a realtime-processing tool like CEP. As shown by the picture~\ref{fig:q3}, the main idea is to periodically run the batch processing code and place the results in a database. Then we combine the results from the batch process that is in the database or a distributed cache using Pattern 6: Merge with data in a database. 
+This pattern is often implemented combining a batch-processing tool like MapReduce and a realtime processing tool like CEP. As shown by Figure~\ref{fig:q3}, the main idea is to periodically run the batch processing code and place the results in a database. Then we combine the results from the batch process that is in the database or a distributed cache using Pattern 6: Merge with data in a database. 
 
 \begin{figure}[!htbp]
 \centering
@@ -751,24 +751,24 @@ This pattern is often implemented combining a batch-processing tool like MapRedu
 %A similar implementation is also possible with Apache Storm using the method described in Pattern 6: Merge with data in a database.
 
 
-\subsection{Implementing Detecting a condition and switching to Detailed Analysis}
-For an example, we can detect fraudulent conditions using a realtime engine in streaming fashion and then trigger a detailed analysis with a batch processing engine like MapReduce. As shown by the figure, we can implement this pattern by first using Pattern 2: Alerts, Pattern 7 Sequences, or Pattern 9 Trends and then triggering a batch job in a MapReduce cluster. 
+\subsection{Implementation of Detecting a condition and Switching to Detailed Analysis}
+For an example, we can detect fraudulent conditions using a realtime engine in streaming fashion and then trigger a detailed analysis with a batch processing engine like MapReduce. As shown by Figure\ref{fig:q4}, we can implement this pattern by first using Alert, Event Sequences, Trends patterns to detect the condition and then triggering a batch job using a MapReduce cluster. 
 
 \begin{figure}[!htbp]
 \centering
 \epsfig{file=images/detailAnalysis.eps, height=1.5in}
 \caption{Trigger Batch from Realtime}
-\label{fig:q2}
+\label{fig:q4}
 \end{figure}
 
-For example, we have built a credit card fraud solution that detects suspicious activities and let human pull historical data from the suspicious activities and do a detail analysis before the final decision. 
+For example, we have built a credit card fraud detection solution that detects suspicious activities and lets a human operator explore related data for more information. For example, when the system flags a credit card transaction as suspicious, the operator can pull out all other transactions done by the same card and make a final decision. Instead by having a human int the loop, the system can also trigger a detailed analysis. 
+
+
 %TODO more details about Fraud solutions 
 
-\subsection{Implementing Using a Model}
+\subsection{Implementation of Using a Model}
 
-The idea is to use a Machine Learning model built elsewhere within realtime analytic processing. For example, we can use R language to build a model (e.g. logistic regression model) and then export the model as a Predictive Model Markup Language (PMML) Model. We can run the PMML model from WSO2 CEP using it's PMML extension. 
-
-Similarly, we can use PMML interpreter like JPMML within a Storm Bolt to implement a similar solution. 
+The idea is to use a Machine Learning model built elsewhere within realtime analytic processing. For example, we can use R language to build a model (e.g., logistic regression model) and then export the model as a Predictive Model Markup Language (PMML) Model. We can run the PMML model from WSO2 CEP using it's PMML extension. Similarly, we can use PMML interpreter like JPMML within a Storm Bolt to implement a similar solution. 
 
 A sample query of running machine learning model in WSO2 CEP is as follows.
 
@@ -780,40 +780,19 @@ from TrasnactionStream
 insert into PotentialFraudsStream;
 \end{lstlisting} 
 
-\subsection{Implementing Online Control} 
+\subsection{Implementation of Online Control} 
 
-For example, lets consider keeping a car's speed close to a given limit. This can be implemented by using pattern we discussed before to detect the conditions and the carry out an action to control the car. 
+For example, lets consider keeping a car's speed close to a given limit. This can be implemented by using a pattern we discussed before to detect the conditions and then carry out an action to control the car. 
 
-For an example, if we need to keep the car's speed in 50 kmph, we can have a one query that detects when it is over 55 kmph and apply breaks and another that detects when it is less than 45 kmph and accelerate the car. Both above queries can be implemented with Pattern 2: Alerts. 
+For an example, if we need to keep the car's speed in 50 kmph, we can have one query that detects when it is over 55 kmph and apply breaks, and another that detects when it is less than 45 kmph and accelerate the car. Both above queries can be implemented with Alerts Pattern. 
 
-However, real life implementations of online control is much more complicated due to factor like it takes time for operations to take effect and we need to wait for one operation to finish before issuing another one. Furthermore, certain condition might lead to oscillations. For example, a car that repeatedly accelerates and de-accelerates is not very comfortable to ride on. We will not explore those details in this discussion. 
+However, real life implementations of online control is much more complicated due to factors like it takes time for operations to take effect and we need to wait for one operation to finish before issuing another one. Furthermore, certain conditions might lead to oscillations. For example, a car that repeatedly accelerates and decelerates is not very comfortable to ride on. We will not explore those details in this discussion. 
 
 \section{Conclusion} 
 
 Although there is much interest in realtime analytics, much focus is on counting use cases. Despite being useful, such use cases are only a small portion of realtime analytics use cases. Since the input data arrives as a data stream, a time dimension always presents in the data. This time dimension allows us to implement and perform much powerful use cases.  
 
-Most current tools forces every programmer to design and implement realtime analytics processing from first principals. For an example, if users need a time window, they need to implement it from first principals.  This is like every programmer implementing his own list data structure. Better understanding of common patterns will let us understand the domain better and build tools that handle those scenarios. This tutorial try to address this gap by describing 13 common relatime analytics patterns and how to implement them. Furthermore, we discussed several real life use cases where those patterns are useful.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Most current tools forces every programmer to design and implement realtime analytics processing from first principles. For an example, if users need a time window, they need to implement it from first principals.  This is like every programmer implementing his own list data structure. Better understanding of common patterns will let us understand the domain better and build tools that handle those scenarios. This tutorial tried to address this gap by describing thirteen common relatime analytics patterns and how to implement them. Furthermore, we discussed several real life use cases where those patterns are useful.
 
 
 %

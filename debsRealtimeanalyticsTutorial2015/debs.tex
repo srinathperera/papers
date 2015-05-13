@@ -159,13 +159,13 @@ morestring=[d]'
 \alignauthor
 Srinath Perera, Suhothayan Sriskandarajah\\
        \affaddr{WSO2 Inc.}\\
-       \affaddr{Palo Alto, CA, USA}\\
+       \affaddr{Mountain View, CA, USA}\\
        \email{\{srinath, suho \}@wso2.com}
 }
 
 \maketitle
 \begin{abstract}
-Large-scale data analytics has received much attention under the theme ``Big Data". Big data usecases have found wide range of applications from individual health monitoring to urban planning. Even at this initial stages, Big data has demonstrated its potential to transform the world. Although most early usecases used batch processing technologies like MapReduce, there are many usecases such as stock markets, traffic, surveillance, and patient monitoring that need  realtime analytics. Technologies like Apache Storm, Spark Streaming, and several Complex Event Processing systems have received attention under realtime analytics. However, most practitioners still focus on implementing realtime analytics from the scratch. There is no common shared understanding about how to implement those analytics usecases among the early adopters. This tutorial try to address this gap by describing 13 common relatime analytics patterns and how to implement them. In the discussion, we will draw heavily from real life usecases done under Complex Event Processing and other technologies. 
+Large-scale data analytics has received much attention under the theme ``Big Data". Big data usecases have found a wide range of applications from individual health monitoring to urban planning. Even at this initial stages, big data has demonstrated it's potential to transform the world. Although most early usecases used batch processing technologies like MapReduce, there are many usecases such as stock markets, traffic, surveillance, and patient monitoring that need realtime analytics. Realtime Analytics Technologies like Apache Storm, Spark Streaming, and several Complex Event Processing systems have received attention under realtime analytics. However, most practitioners still focus on implementing realtime analytics from the scratch. There is no common shared understanding about how to implement those analytics usecases among the early adopters. This tutorial tries to address this gap by describing thirteen common relatime analytics patterns and explaining how to implement them. In the discussion, we will draw heavily from real life usecases done under Complex Event Processing and other technologies. 
 \end{abstract}
 
 % A category with the (minimum) three required fields
@@ -181,33 +181,33 @@ Large-scale data analytics has received much attention under the theme ``Big Dat
 
 \section{Introduction}
 
-Google's MapReduce paper published in 2005 introduced a simple and scalable data processing technique that can be used with commodity hardware. Since then, Data Analytics--processing data and deriving actionable insights from data--has received much attention from both the Industry and Academia.  Most initial use cases where batch analytics, which stores data in a disk and then periodically processes data by walking through it. Unless data is small, batch analytics would take minutes to produce an output. However, for some use cases ( e.g. stock markets, traffic, surveillance, and patient monitoring), the value of insights degrades very quickly with time. For an example, stock markets analytics results are often useless within milliseconds. Batch processing technologies like MapReduce, which take minutes to hours to produce an output, are not suitable for such use cases. To fill that gap, architects have adopted technologies like In-Memory Computing (VoltDB~\cite{voltdb}, ZAP Hana~\cite{saphana}), Stream Processing (e.g. Apache Storm~\cite{storm}, Apache Samza~\cite{samza}), and Complex Event Processing (Esper~\cite{esper}, WSO2 CEP~\cite{siddhi}, Tibco StreamBase~\cite{streambase}).
+Google's MapReduce paper published in 2005 introduced a simple and scalable data processing technique that can be used with commodity hardware. Since then, Data Analytics--processing data and deriving actionable insights from data--has received much attention from both the Industry and the Academia.  Most initial use cases were batch analytics, which stored data in a disk and then periodically processes data by walking through it. Unless data is small, batch analytics would take minutes to produce an output. However, for some use cases ( e.g., stock markets, traffic, surveillance, and patient monitoring), the value of insights degrades very quickly with time. For an example, analytics from stock markets are often useless within milliseconds. Batch processing technologies like MapReduce, which take from minutes to hours to produce an output, are not suitable for such use cases. To fill that gap, architects have adopted technologies like In-Memory Computing (VoltDB~\cite{voltdb}, ZAP Hana~\cite{saphana}), Stream Processing (e.g., Apache Storm~\cite{storm}, Apache Samza~\cite{samza}), and Complex Event Processing (Esper~\cite{esper}, WSO2 CEP~\cite{siddhi}, Tibco StreamBase~\cite{streambase}).
 
-Realtime analytics, or what people call Realtime Analytics, have two flavors.  
+Realtime analytics uses cases have two flavors.  
 
 \begin{enumerate}
-\item Realtime Interactive/Ad-hoc Analytics (users issue ad-hoc dynamic queries and the system responds interactively). Among example of such systems are Druid, SAP Hana, VoltDB, MemSQL, and Apache Drill. 
-\item Realtime Streaming Analytics ( users issue static queries once and they do not change, and the system process data as they come in without storing). CEP and Stream Processing technologies are two example technologies that enable streaming analytics. 
+\item Realtime Interactive/Ad-hoc Analytics - users issue ad-hoc dynamic queries and the system responds interactively. Among the examples of such systems are Druid, SAP Hana, VoltDB, MemSQL, and Apache Drill. 
+\item Realtime Streaming Analytics - users issue static queries once and they do not change. The system process data as they come in without storing). CEP and Stream Processing technologies are two example technologies that enable streaming analytics. 
 \end{enumerate}
 
-Realtime Interactive Analytics allow users to explore a large data set by issuing interactive queries. They should respond within 10 seconds, which is considered the upper bound for acceptable human interaction. In contrast, this tutorial focuses on Realtime Streaming Analytics, which is processing data as they come in without storing them and react to those data very fast, often within few milliseconds. Such technologies are not new. History goes back to Active Databases (2000+), Stream processing (e.g. Aurora~\cite{abadi_aurora:_2003}, Borealis~\cite{abadi_design_2005} (2005+) and later Apache Storm), Distributed Streaming Operators as a Database research topic around 2005, and Complex Event processing (see \cite{marketSurvey}).
+Realtime Interactive Analytics allows users to explore a large data set by issuing interactive queries. They should respond within 10 seconds, which is considered the upper bound for acceptable human interaction. In contrast, this tutorial focuses on Realtime Streaming Analytics, which is processing data and reacting to them very fast as they come in, often within few milliseconds. Such technologies are not new. History goes back to Active Databases (2000+), Stream processing (e.g. Aurora~\cite{abadi_aurora:_2003}, Borealis~\cite{abadi_design_2005} (2005+) and later Apache Storm), Distributed Streaming Operators as a Database research topic around 2005, and Complex Event processing (see \cite{marketSurvey}).
 
-Still when thinking about Realtime analytics, many think only counting usecases. As we shall discuss, counting usecases are only the tip of the iceberg of real-life realtime usecases. Since the input data arrives as a data stream, a time dimension always presents in the data. This time dimension allows us to implement and perform much powerful usecases.  
+Still when thinking about realtime analytics, many think only counting use cases. As we shall discuss, counting use cases are only the tip of the iceberg of real life realtime use cases. Since the input data arrives as a data stream, a time dimension always presents in the data. This time dimension allows us to implement and perform much powerful use cases.  
 
-Under the theme large scale streaming analytics, stream processing technologies like Apache Samza and Apache Storm has received much attention. However, these tools force every programmer to design and implement realtime analytics processing from first principals. For an example, if users need a time window, they need to implement it from first principals.  This is like every programmer implementing his own list data structure. Better understanding of common patterns will let us understand the domain better and build tools that handle those scenarios. This tutorial tries to address this gap by describing 13 common relatime streaming analytics patterns and how to implement them. In the discussion, we will draw heavily from real life usecases done under Complex Event Processing and other technologies. 
+Under the theme large scale streaming analytics, stream processing technologies like Apache Samza and Apache Storm have received much attention. However, these tools force every programmer to design and implement realtime analytics processing from first principles. For an example, if users need a time window, they need to implement it from first principles.  This is like every programmer implementing his own list data structure. Better understanding of common patterns will let us understand the domain better and build tools that handle those scenarios. This tutorial tries to address this gap by describing thirteen common relatime streaming analytics patterns and how to implement them. In the discussion, we will draw heavily from real life use cases done under Complex Event Processing and other technologies. 
 
-The next section describes the patterns, and the following  section compares them against the patterns identified elsewhere. The third section describes pattern implementations. The final section concludes the discussion. 
+The next section describes the patterns, and the following  section compares them against the patterns identified elsewhere. The fourth section describes pattern implementations. The final section concludes the discussion. 
 
 \section{Realtime Stream Analytics Patterns}
  
-Let us look at some of the common patterns. Let's first agree on the terminology. Realtime Streaming Analytics accepts input as a set of streams where each stream consists of many events ordered in time. Each event has many attributes, but all events in a same stream have the same set of attributes or schema. 
+Let's first agree on the terminology. Realtime Streaming Analytics accepts one or more data streams as input and produces one or more data streams as output. Each data stream consists of many events ordered in time. Each event has many attributes, but all events in a same stream have the same set of attributes or schema. One could think of data streams as a relational table that never ends where each event is a record in the table. 
 
 
 \subsection{Pattern 1: Preprocessing}
 Preprocessing is often done as a projection from one data stream to the other or through filtering. Potential operations include
 \begin{enumerate}
-\item Filtering and removing some events
-\item Reshaping a stream by removing, renaming, or adding new attributes to a stream
+\item Filtering some events
+\item Reshaping a stream by removing, renaming, or adding new attributes to events in the stream
 \item Splitting and combining attributes in a stream 
 \item Transforming attributes   
 \end{enumerate}
@@ -215,9 +215,9 @@ Preprocessing is often done as a projection from one data stream to the other or
 For example, from a twitter data stream, we might choose to extract the fields: author, timestamp, location, and then filter them based on the location of the author. 
 
 \subsection{Pattern 2: Alerts and Thresholds}
-This pattern detects a condition and generates alerts based on a condition. (e.g. Alarm on high temperature). These alerts can be based on a simple value or more complex conditions such as rate of increase etc. 
+This pattern detects a condition and generates alerts based on a condition. (e.g., Alarm on high temperature). These alerts can be based on a simple value or more complex conditions such as rate of increase etc. 
 
-For an example, in TFL (Transport for London) Demo video \cite{tfl} based on transit data from London, we trigger a speed alert  when the bus has exceed a given speed limit. 
+For an example, in a use case we implemented using transit data from London city, we trigger a speed alert  when a bus has exceeded a given speed limit. More details are described in TFL (Transport for London) Demo video \cite{tfl}. 
  
 \begin{figure}[!htbp]
 \centering
@@ -226,48 +226,48 @@ For an example, in TFL (Transport for London) Demo video \cite{tfl} based on tra
 \label{fig:q1}
 \end{figure}
 
-Also we can generate alerts for more complex scenarios such as the server room temperature is continually increasing for last 5 mins. 
+We can also generate alerts for more complex scenarios such as detecting if the server room temperature is continually increasing for the last five mins. 
 
 \subsection{Pattern 3: Simple Counting and Counting with Windows}
 
-This pattern includes aggregate functions like Min, Max, Percentiles etc, and they can be counted without storing any data. (e.g. counting number of failed transactions). 
+This pattern includes aggregate functions like Min, Max, Percentiles, etc. They can be calculated without storing any data. (e.g., counting the number of failed transactions). 
 
-However, count are often useful with a time window attached to it.( e.g. failure count last hour). There are many types of windows: sliding windows vs. batch (tumbling) windows and time vs. length windows. There are four main variations. 
+However, counts are often useful with a time window attached to it.( e.g. failure count in the last hour). There are many types of windows: sliding windows vs. batch (tumbling) windows and time vs. length windows. There are four main variations. 
 
 \begin{enumerate}
-\item Time, Sliding window: keeps each event for the given time window, produce an output whenever new event has added or removed. 
-\item Time, Batch window: also called tumbling windows, they only produce output at the end of the time window
-\item Length, Sliding : same as the time, sliding window, but keeps an window of n events instead of selecting them by time.
-\item Length, Batch window: same as the time, batch window, but keeps an window of n events instead of selecting them by time
+\item Time-sliding window: keeps each event for the given time window, produces an output whenever a new event has been added or removed. 
+\item Time-batch window (called tumbling window): produces output at the end of the given time window
+\item Length-sliding : same as the time-sliding window, but keeps a window of n events instead of selecting them by time.
+\item Length-Batch window: same as the time-batch window, but keeps a window of n events instead of selecting them by time
 \end{enumerate}
 
 Also there are special windows like decaying windows and unique windows. 
 
 
 \subsection{Pattern 4: Joining Event Streams}
-Main idea behind this pattern is to match up multiple data streams and create a new event stream. For an example, lets assume we play a football game with the players and the ball having sensors that emits events with current location and acceleration. We can use ``joins" to detect when a player have kicked the ball. To that end, we can join the ball location stream and the player stream on the condition that they are close to each other by one meter and the ball's acceleration has increased by more than $55m/s^2$.
+Main idea behind this pattern is to combine multiple data streams and create a new event stream. For example, lets assume we play a football game where both the players and the ball having attached sensors that emit events that have current location and acceleration as properties. We can use ``joins" pattern to detect when a player has kicked the ball. We do that by joining the ball location stream and the player stream on the condition that they are close to each other by one meter and the ball's acceleration has increased by more than $55m/s^2$.
 
-Among other usecases are combining data from two sensors, and detecting proximity of two vehicles. 
+Among other use cases are combining data from two sensors, detecting collisions, and detecting proximity of two vehicles. 
 
 \subsection{Pattern 5: Data Correlation, Missing Events, and Erroneous Data}
-This pattern and the pattern 4 has lot in common where here too we match up multiple stream. In addition, we also correlate the data within the same stream. This is because different data sensors can send events in different rates, and many usecases require this fundamental operator. 
 
-Following are some possible scenarios. 
+When we correlate events between different streams, we would use the forth pattern. In addition, we can also correlate the data within the same stream. Another variation of this idea is missing events and errornous data. 
+
+Following are some of the possible scenarios. 
 
 \begin{enumerate}
 \item Matching up two data streams that send events in different speeds 
-\item  Detecting a missing event in a data stream ( e.g. detect a customer request that has not been responded within in 1 hour of its reception. )
-\item Detecting erroneous data (e.g. Detect failed sensors using a set of sensors that monitor overlapping regions and using those redundant data to find erroneous sensors and removing their data from further processing) 
-
+\item  Detecting a missing event in a data stream ( e.g., detect a customer request that has not been responded within 1 hour of its reception. )
+\item Detecting erroneous data (e.g., Detecting failed sensors using a set of sensors that monitor overlapping regions. We can use those redundant data to find erroneous sensors and removing their data from further processing) 
 \end{enumerate}
 
 \subsection{Pattern 6: Interacting with Databases}
 Often we need to combine the realtime data against the historical data stored in a disk. 
 Following are few examples. 
 \begin{enumerate}
-\item When a transaction happened, lookup the age using the customer ID from customer database to be used for Fraud detection (enrichment) 
+\item When a transaction happened, lookup the age using the customer ID from customer database to be used for fraud detection (enrichment) 
 \item Checking a transaction against blacklists and whitelists in the database 
-\item Receive an input from the user (e.g. Daily discount amount may be updated in the database, and then the query will pick it automatically without human intervention.) 
+\item Receive an input from the user (e.g., Daily discount amount may be updated in the database, and then the query will pick it automatically without human intervention). 
 \end{enumerate}
 
 
@@ -285,15 +285,15 @@ Such temporal sequence patterns are very powerful. For example, the \cite{footba
 \label{fig:q2}
 \end{figure}
 
-In the video, we used patterns on event sequence to detect the ball possession, the time period a specific player controlled the ball. A player possessed the ball from the time he hits the ball, until someone else hits the ball. This condition can be written as a regular expression: a hit by me, followed by any number of hits by me, followed by a hit by someone else.  (We already discussed how to detect the hits on the ball in Pattern 4: Joins).  
+In the video, we used patterns on event sequence to detect the ball possession (the time period a specific player controlled the ball). A player possessed the ball from the time he hits the ball, until someone else hits the ball. This condition can be written as a regular expression: a hit by me, followed by any number of hits by me, followed by a hit by someone else.  (We already discussed how to detect the hits on the ball in Pattern 4: Joins).  
 
 \subsection{Pattern 8: Tracking}
 The eighth pattern tracks something over space and time and detects given conditions. Following are few examples 
 \begin{enumerate}
 \item Tracking a fleet of vehicles, making sure that they adhere to speed limits, routes,  and geo-fences. 
 \item Tracking wildlife, making sure they are alive (they will not move if they are dead) and making sure they will not go out of the reservation. 
-\item Tracking airline luggage and making sure they are not been sent to wrong destinations
-\item Tracking a logistic network and figure out bottlenecks and unexpected conditions. 
+\item Tracking airline luggage and making sure they have not been sent to wrong destinations
+\item Tracking a logistic network and figuring out bottlenecks and unexpected conditions. 
 \end{enumerate}
 
 For example, TFL Demo we discussed under pattern 2 shows an application that tracks and monitors London buses using the open data feeds exposed by TFL(Transport for London). 
@@ -308,7 +308,7 @@ Following are some of the examples of trends.
 \item Rise, Fall
 \item Turn (switch from rise to a fall)
 \item Outliers
-\item Complex trends like triple bottom etc.
+\item Complex trends like ``Triple Bottom" and ``Cup and Handle".
 \end{enumerate}
 
 These trends are useful in a wide variety of use cases such as 
@@ -316,21 +316,21 @@ These trends are useful in a wide variety of use cases such as
 \begin{enumerate}
 \item Stock markets and Algorithmic trading 
 \item Enforcing SLA (Service Level Agreement), Auto Scaling, and Load Balancing 
-\item Predictive maintenance ( e.g. guessing the Hard Disk will fill within next week)   
+\item Predictive maintenance ( e.g., guessing weather the Hard Disk will fill within the next week)   
 \end{enumerate}
 
-\subsection{Pattern 10: Running the same Query in Batch and Realtime Pipelines}
+\subsection{Pattern 10: Running the Same Query in Batch and Realtime Pipelines}
 
-This pattern runs the same query in both Relatime and batch pipeline. It is often used to fill the gap left in the data due to batch processing. For example, if batch processing takes 15 minutes, results would lack the data for last 15 minutes. 
+This pattern runs the same query in both Relatime and batch pipelines. It is often used to fill the gap left in the data due to batch processing. For example, if batch processing takes 15 minutes, results would lack the data for last 15 minutes. 
 
-Idea of this pattern, which is sometime called ``Lambda Architecture" is to use realtime analytics to fill the gap. Nathen Marz's ``Questioning the Lambda Architecture"~\cite{lambdaQ} dicsuss this pattern in detail.
+Idea of this pattern, which is sometimes called ``Lambda Architecture", is to use realtime analytics to fill the gap. Nathen Marz's ``Questioning the Lambda Architecture"~\cite{lambdaQ} discusses this pattern in detail.
 
 
-\subsection{Pattern 11: Detecting and switching to Detailed Analysis}
+\subsection{Pattern 11: Detecting and Switching to Detailed Analysis}
 Main idea of the pattern is to detect a condition that suggests some anomaly, and further analyze it using historical data.  This pattern is used with the use cases where we cannot analyze all the data with full detail. Instead we analyze anomalous cases in full detail. Following are few examples. 
 
 \begin{enumerate}
-\item Use basic rules to detect Fraud (e.g. large transaction), then pull out all transactions done against that credit card for larger time period (e.g. 3 months data) from batch pipeline and run a detailed analysis 
+\item Use basic rules to detect Fraud (e.g., large transaction), then pull out all transactions done against that credit card for larger time period (e.g. 3 months data) from batch pipeline and run a detailed analysis 
 \item While monitoring weather, detect conditions like high temperature or low pressure in a given region, and then start a high resolution localized forecast on that region. 
 \item Detect good customers, for example through expenditure of more than $1000\$$ within a month, and then run a detailed model to decide potential of offering a deal. 
 \end{enumerate}
@@ -381,19 +381,19 @@ Pattern 13: Online Control & & & & \\ \hline
 
 Earlier efforts have identified common streaming realtime operators and patterns. For an instance, most Complex Event Processing technologies have adopted a SQL like query languages thus adopting operators from SQL. They, however, added more operators like windows and temporal pattern recognition to better handle the time dimension. Most such tools supports patterns such as filters, transforms, windows, joins, and temporal event patterns. Cugola and Margara~\cite{cugolaprocessing} have defined a classification of these operators and done an extensive survey of different tools. However, as shown by table 1, the paper focuses on basic abstract operators as oppose to higher-level patterns. 
 
-Technical community has also discussed this issue several times. For an example, Esper provides about 50 patterns in their solution patterns document~\cite{esperPatterns}. Although the document does not try to cover all categories, it provides insight into common problems faced by streaming query developers. Most Esper patterns are very specific and defined on a narrow usecases. However, since the patterns have grown from user feedback over time, they provide a good indication of problems people trying to solve with event processing systems. 
+Technical community has also discussed this issue several times. For an example, Esper provides about 50 patterns in their solution patterns document~\cite{esperPatterns}. Although the document does not try to cover all categories, it provides insight into common problems faced by streaming query developers. Most Esper patterns are very specific and defined on a narrow use cases. However, since the patterns have grown from user feedback over time, they provide a good indication of problems people trying to solve with event processing systems. 
 
 Coral8 white paper~\cite{Coral810patterns} discusses ten patterns. As Table 1 depicts most of them matches directly to the patterns discussed in this tutorial. Among ones that did not match, we considered in-memory caching as an implementation detail of database mapping (Pattern 6). We considered hierarchical processing as a preprocessing step in generating events. Also we considered dynamic queries not as a pattern, but as an implementation detail on how query interface between users and the system is constructed. 
 
 Event Processing Technical Society's (EPTS) reference architecture~\cite{eptsRefArch} comes very close to patterns we discussed in this tutorial. In contrast to other efforts, the EPTS reference architecture identifies higher-level patterns such as tracking, prediction and learning in addition to low-level operators that comes from SQL like languages. Allowing for wider interpretations, EPTS patterns can contains almost all patterns we discuss. Notable exception is streaming patterns that incorporate batch processing, which is a idea developed much later. 
 
-Patterns we introduced incorporate basic complex event processing patterns that comes from SQL like languages as well as the higher-level usecases like tracking and detecting trends.  They are defined with more focus on the user rather than with the than mechanics of processing implementation. For example, we called the first two patterns ``Preprocessing and Alerts" instead of calling it a filter. Following Table 1 shows how each of above approaches matches the patterns introduced in this tutorial. 
+Patterns we introduced incorporate basic complex event processing patterns that comes from SQL like languages as well as the higher-level use cases like tracking and detecting trends.  They are defined with more focus on the user rather than with the than mechanics of processing implementation. For example, we called the first two patterns ``Preprocessing and Alerts" instead of calling it a filter. Following Table 1 shows how each of above approaches matches the patterns introduced in this tutorial. 
 
 \section{Pattern Implementations}  
 
 In this section we will discuss how above patterns can be implemented with Apache Storm~\cite{storm} and WSO2 Complex Event Processor~\cite{siddhi}. 
 
-Apache Storm is a distributed stream processing engine, which allows users to write queries (topologies as per Apache Storm terminology) as Javabeans and deploy them in to a cluster. It uses components named Spouts for fetching events from external systems and Bolts for processing those events. Since Spouts and Bolts are written as Java classes it allows us to implement almost any usecase. In this tutorial we are omitting the implementation details of Spouts because it is same for all the usecases and depends on the transports and the protocol used for retrieving the events. 
+Apache Storm is a distributed stream processing engine, which allows users to write queries (topologies as per Apache Storm terminology) as Javabeans and deploy them in to a cluster. It uses components named Spouts for fetching events from external systems and Bolts for processing those events. Since Spouts and Bolts are written as Java classes it allows us to implement almost any use case. In this tutorial we are omitting the implementation details of Spouts because it is same for all the use cases and depends on the transports and the protocol used for retrieving the events. 
 
 As the Complex Event Processing Server, we will use WSO2 CEP. It accepts queries via SQL like query language and support filters, transformations, windows, joins, temporal event patterns, and interacting with databases with data streams. At the distributed mode, WSO2 CEP can compile a given query to set of queries that run as an Apache Storm topology where each Bolt would run a WSO2 CEP engine as a java library. We call this java Library as Siddhi~\cite{siddhilib}.
 
@@ -493,11 +493,11 @@ insert into lastMinStocksOfGOOG;
 Here we are implementing a 60 seconds batch window and we use it to generate the the totalAmount of the GOOG stocks that were trading over the last hour. However, there are many other types of windows available:  sliding time windows, length batch window, length sliding window, unique window, first unique window etc.  We will not discuss them in detail, but most Complex Event Processing engines, including WSO2 CEP, have support for those windows. 
 
 \subsection{Implementing Joining Event Streams}
-When joining multiple streams, we can not join the current event of a particular stream against all the events that have arrived so far from the other stream. This is because it is expensive to hold all the events in memory or even at an external storage. Therefore, with realtime streaming usecases, we store only a predefined amount of events (based on time, length or via other criteria) and match against those. For a successful implementation of the join pattern, we will need a criteria for storing historic events and the ability to match the conditions against that dynamic storage. 
+When joining multiple streams, we can not join the current event of a particular stream against all the events that have arrived so far from the other stream. This is because it is expensive to hold all the events in memory or even at an external storage. Therefore, with realtime streaming use cases, we store only a predefined amount of events (based on time, length or via other criteria) and match against those. For a successful implementation of the join pattern, we will need a criteria for storing historic events and the ability to match the conditions against that dynamic storage. 
 
 For this example, lets consider the football game described with the pattern where we join the ball and player streams to detect a kick. The following pseudo code explains the Storm implementation. 
 
-For this usecase, we assume there are two window implementation that keeps events. 
+For this use case, we assume there are two window implementation that keeps events. 
 
 \begin{lstlisting}[mathescape, showstringspaces=false]
 BALL_W = NEW_LENGTH_WINDOW(1); 
@@ -532,7 +532,7 @@ This implementation keeps two windows, one for events from the ball stream and o
 
 If windows could hold a large number of events, we would need to build indexes to make FIND\_EVENTS faster. 
 
-Following query shows the same usecase implemented with Complex Event processing.  
+Following query shows the same use case implemented with Complex Event processing.  
 
 
 \begin{lstlisting}[mathescape]
@@ -572,7 +572,7 @@ END
 
 Here we are keep a list of requests and remove them when the request has been served (detected via ResponseEvent). If request is in the list for more than 1 hour, we raise an event after it is expired. 
 
-CEP query for the same usecase is given below. 
+CEP query for the same use case is given below. 
 
 \begin{lstlisting}[mathescape, showstringspaces=false]
 from requestStream#time.window(1 hour)
@@ -608,7 +608,7 @@ END
 
 In WSO2 CEP, for merging events with data in a database, or for collecting and updating them based on conditions we use a construct called Event Table. This allows siddhi to represent historic data stored in a database as a table allowing it to be combined with active event streams at realtime. 
 
-Let us implement the earlier usecases with CEP.
+Let us implement the earlier use cases with CEP.
 
 \begin{lstlisting}[mathescape, showstringspaces=false]
 define table CustomerTable (customerId string, 
@@ -668,7 +668,7 @@ Here `->' denotes `followed by', meaning after the first event its corresponding
 
 \subsection{Implementing Detecting Trends}
 
-Detecting trends is one of the key streaming analytics usecases. Trends are widely in both Stock markets and in Algorithmic trading. For example, stock market traders have identified a set of chart patterns like triple Bottom pattern~\cite{bulkowski2011encyclopedia} that are significant behaviors in the market that are actionable. 
+Detecting trends is one of the key streaming analytics use cases. Trends are widely in both Stock markets and in Algorithmic trading. For example, stock market traders have identified a set of chart patterns like triple Bottom pattern~\cite{bulkowski2011encyclopedia} that are significant behaviors in the market that are actionable. 
 
 Identifying even basic trends like a peak require us to implement a state machine depicted in Figure~\ref{fig:q4}. We will not implement this usecase with Storm as it is complicated. 
 
@@ -790,9 +790,9 @@ However, real life implementations of online control is much more complicated du
 
 \section{Conclusion} 
 
-Although there is much interest in realtime analytics, much focus is on counting usecases. Despite being useful, such usecases are only a small portion of realtime analytics usecases. Since the input data arrives as a data stream, a time dimension always presents in the data. This time dimension allows us to implement and perform much powerful usecases.  
+Although there is much interest in realtime analytics, much focus is on counting use cases. Despite being useful, such use cases are only a small portion of realtime analytics use cases. Since the input data arrives as a data stream, a time dimension always presents in the data. This time dimension allows us to implement and perform much powerful use cases.  
 
-Most current tools forces every programmer to design and implement realtime analytics processing from first principals. For an example, if users need a time window, they need to implement it from first principals.  This is like every programmer implementing his own list data structure. Better understanding of common patterns will let us understand the domain better and build tools that handle those scenarios. This tutorial try to address this gap by describing 13 common relatime analytics patterns and how to implement them. Furthermore, we discussed several real life usecases where those patterns are useful.
+Most current tools forces every programmer to design and implement realtime analytics processing from first principals. For an example, if users need a time window, they need to implement it from first principals.  This is like every programmer implementing his own list data structure. Better understanding of common patterns will let us understand the domain better and build tools that handle those scenarios. This tutorial try to address this gap by describing 13 common relatime analytics patterns and how to implement them. Furthermore, we discussed several real life use cases where those patterns are useful.
 
 
 

@@ -1,0 +1,61 @@
+This is BibTeX, Version 0.99d (TeX Live 2013)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: debs.aux
+The style file: abbrv.bst
+Database file #1: sigproc.bib
+Warning--to sort, need author or key in voltdb
+Warning--to sort, need author or key in saphana
+Warning--to sort, need author or key in storm
+Warning--to sort, need author or key in samza
+Warning--to sort, need author or key in esper
+Warning--to sort, need author or key in streambase
+Warning--to sort, need author or key in marketSurvey
+Warning--to sort, need author or key in tfl
+Warning--to sort, need author or key in footballDemo
+Warning--to sort, need author or key in lambdaQ
+Warning--to sort, need author or key in esperPatterns
+Warning--to sort, need author or key in Coral810patterns
+Warning--to sort, need author or key in siddhilib
+Warning--empty year in cugolaprocessing
+You've used 20 entries,
+            2118 wiz_defined-function locations,
+            583 strings with 6218 characters,
+and the built_in function-call counts, 4641 in all, are:
+= -- 451
+> -- 133
+< -- 4
++ -- 63
+- -- 40
+* -- 210
+:= -- 649
+add.period$ -- 62
+call.type$ -- 20
+change.case$ -- 76
+chr.to.int$ -- 0
+cite$ -- 34
+duplicate$ -- 202
+empty$ -- 497
+format.name$ -- 40
+if$ -- 1083
+int.to.chr$ -- 0
+int.to.str$ -- 20
+missing$ -- 8
+newline$ -- 103
+num.names$ -- 14
+pop$ -- 187
+preamble$ -- 1
+purify$ -- 57
+quote$ -- 0
+skip$ -- 145
+stack$ -- 0
+substring$ -- 163
+swap$ -- 48
+text.length$ -- 4
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 78
+warning$ -- 14
+while$ -- 19
+width$ -- 22
+write$ -- 194
+(There were 14 warnings)

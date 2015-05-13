@@ -1,0 +1,114 @@
+\begin{thebibliography}{10}
+
+\bibitem{samza}
+Apache samza.
+\newblock \url{http://samza.apache.org/}.
+\newblock Accessed: 2015-05-02.
+
+\bibitem{storm}
+Apache storm.
+\newblock \url{https://storm.apache.org/}.
+\newblock Accessed: 2015-05-02.
+
+\bibitem{marketSurvey}
+Cep tooling market survey.
+\newblock
+  \url{http://www.complexevents.com/2014/12/03/cep-tooling-market-survey-2014/}.
+\newblock Accessed: 2015-05-02.
+
+\bibitem{Coral810patterns}
+Complex event processing: ten design patterns.
+\newblock
+  \url{http://complexevents.com/wp-content/uploads/2007/04/Coral8DesignPatterns.pdf}.
+\newblock Accessed: 2015-05-02.
+
+\bibitem{esper}
+Esper complex event processing engine.
+\newblock \url{http://www.espertech.com/}.
+\newblock Accessed: 2015-05-02.
+
+\bibitem{esperPatterns}
+Esper solution patterns.
+\newblock \url{http://www.espertech.com/esper/solution_patterns.php}.
+\newblock Accessed: 2015-05-02.
+
+\bibitem{footballDemo}
+Football demo based on debs 2013 grand challenge.
+\newblock \url{https://www.youtube.com/watch?v=nRI6buQ0NOM}.
+\newblock Accessed: 2015-05-02.
+
+\bibitem{lambdaQ}
+Questioning the lambda architecture.
+\newblock
+  \url{http://radar.oreilly.com/2014/07/questioning-the-lambda-architecture.html}.
+\newblock Accessed: 2015-05-02.
+
+\bibitem{saphana}
+Sap hana.
+\newblock \url{http://hana.sap.com/abouthana.html}.
+\newblock Accessed: 2015-05-02.
+
+\bibitem{siddhilib}
+Siddhi complex event processing library.
+\newblock \url{https://github.com/wso2/siddhi}.
+\newblock Accessed: 2015-05-02.
+
+\bibitem{streambase}
+Tibco streambase.
+\newblock
+  \url{http://www.tibco.com/products/event-processing/complex-event-processing/streambase-complex-event-processing}.
+\newblock Accessed: 2015-05-02.
+
+\bibitem{voltdb}
+Voltdb.
+\newblock \url{http://voltdb.com/}.
+\newblock Accessed: 2015-05-02.
+
+\bibitem{tfl}
+Wso2 london tfl demo.
+\newblock https://www.youtube.com/watch?v=mjPPbTFAqes.
+\newblock Accessed: 2015-05-02.
+
+\bibitem{abadi_design_2005}
+D.~Abadi, Y.~Ahmad, et~al.
+\newblock The design of the borealis stream processing engine.
+\newblock In {\em Second Biennial Conference on Innovative Data Systems
+  Research {(CIDR} 2005), Asilomar, {CA}}, pages 277--289, 2005.
+
+\bibitem{abadi_aurora:_2003}
+D.~Abadi, D.~Carney, et~al.
+\newblock Aurora: a data stream management system.
+\newblock In {\em Proceedings of the 2003 {ACM} {SIGMOD} international
+  conference on Management of data}, pages 666--666, 2003.
+
+\bibitem{chartPatterns}
+R.~Arachchi, M.~Bandara, et~al.
+\newblock A complex event processing toolkit for detecting technical chart
+  patterns.
+\newblock {\em High Performance Big Data and Cloud Computing Workshop (HPBC)},
+  2015.
+
+\bibitem{bulkowski2011encyclopedia}
+T.~N. Bulkowski.
+\newblock {\em Encyclopedia of chart patterns}, volume 225.
+\newblock John Wiley \& Sons, 2011.
+
+\bibitem{cugolaprocessing}
+G.~Cugola and A.~Margara.
+\newblock Processing flows of information: From data stream to complex event
+  processing.
+\newblock {\em ACM Computing Surveys, 2011}.
+
+\bibitem{eptsRefArch}
+A.~Paschke and P.~Vincent.
+\newblock A reference architecture for event processing.
+\newblock In {\em Proceedings of the Third ACM International Conference on
+  Distributed Event-Based Systems}, page~25. ACM, 2009.
+
+\bibitem{siddhi}
+S.~Suhothayan, K.~Gajasinghe, I.~L. Narangoda, S.~Chaturanga, S.~Perera, and
+  V.~Nanayakkara.
+\newblock Siddhi: A second look at complex event processing architectures.
+\newblock In {\em Gateway Computing Environments Workshop (GCE)}. IEEE, 2011.
+
+\end{thebibliography}

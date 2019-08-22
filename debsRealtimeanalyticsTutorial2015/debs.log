@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2013.8.29)  12 MAY 2015 15:00
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2013.8.29)  13 MAY 2015 21:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -239,7 +239,7 @@ Package: listings 2007/02/22 1.4 (Carsten Heinz)
 Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
 ) (./debs.aux
 
-LaTeX Warning: Label `fig:q2' multiply defined.
+LaTeX Warning: Label `fig:q4' multiply defined.
 
 )
 \openout1 = `debs.aux'.
@@ -305,49 +305,67 @@ Overfull \hbox (1.10355pt too wide) in paragraph at lines 184--185
  []
 
 
-Overfull \hbox (5.73839pt too wide) in paragraph at lines 184--185
-\T1/aer/m/n/9 Stream Pro-cess-ing (e.g. Apache Storm [2], Apache Samza [1]),
- []
-
-
-Overfull \hbox (5.05658pt too wide) in paragraph at lines 190--191
-[]\T1/aer/m/n/9 Realtime Stream-ing An-a-lyt-ics ( users is-sue static queries
- []
-
-
-Overfull \hbox (3.47226pt too wide) in paragraph at lines 197--198
-\T1/aer/m/n/9 pro-cess-ing tech-nolo-gies like Apache Samza and Apache Storm
+Overfull \hbox (4.54352pt too wide) in paragraph at lines 190--191
+[]\T1/aer/m/n/9 Realtime Stream-ing An-a-lyt-ics - users is-sue static queries
  []
 
 [1
 
 
 ]
+Overfull \hbox (3.47226pt too wide) in paragraph at lines 197--198
+\T1/aer/m/n/9 pro-cess-ing tech-nolo-gies like Apache Samza and Apache Storm
+ []
+
+
+Overfull \hbox (20.26411pt too wide) in paragraph at lines 201--201
+[]\secfnt REALTIME STREAM-ING AN-A-LYT-ICS PAT-
+ []
+
 File: images/tfl.eps Graphic file (type eps)
- <images/tfl.eps>
+<images/tfl.eps>
+Overfull \hbox (2.25627pt too wide) in paragraph at lines 238--239
+\T1/aer/m/n/9 time win-dow, pro-duces an out-put when-ever a new event
+ []
+
+
 Overfull \hbox (12.95818pt too wide) in paragraph at lines 252--252
 []\secfnt Pattern 5: Data Cor-re-la-tion, Miss-ing Events,
  []
 
 [2]
 File: images/football.eps Graphic file (type eps)
- <images/football.eps> [3]
+ <images/football.eps>
+Overfull \hbox (5.27077pt too wide) in paragraph at lines 319--320
+[]\T1/aer/m/n/9 Predictive main-te-nance (e.g., guess-ing whether the Hard
+ []
+
+
+Overfull \hbox (5.56783pt too wide) in paragraph at lines 326--327
+[]\T1/aer/m/n/9 The idea of this pat-tern, which is some-times called ``Lambda
+ []
+
+[3]
 LaTeX Font Info:    Try loading font information for T1+aett on input line 403.
 
-
-(/usr/local/texlive/2013/texmf-dist/tex/latex/ae/t1aett.fd
+ (/usr/local/texlive/2013/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
 
 LaTeX Font Warning: Font shape `T1/aett/bx/n' undefined
 (Font)              using `T1/aett/m/n' instead on input line 405.
 
-
+[4]
 Overfull \hbox (4.48949pt too wide) in paragraph at lines 412--413
 []\T1/aer/m/n/9 Apache Storm based im-ple-men-ta-tion of the above de-scribed
  []
 
-[4]
+
+Overfull \hbox (13.7778pt too wide) in paragraph at lines 414--415
+\T1/aer/m/n/9 Also there is a spe-cial method SEND2_NEXT_PROCESSOR(E)
+ []
+
+
 Overfull \hbox (6.81381pt too wide) in paragraph at lines 462--462
 []\secfnt Implementing Sim-ple Count-ing and Count-
  []
@@ -368,28 +386,32 @@ Overfull \hbox (9.78345pt too wide) in paragraph at lines 511--512
  []
 
 
+Overfull \hbox (3.682pt too wide) in paragraph at lines 550--550
+[]\secfnt Implementation of Data Cor-re-la-tion, Miss-
+ []
+
+
 Overfull \hbox (27.62512pt too wide) in paragraph at lines 560--561
 [][][][][][][][][][][][][][][][] 
  []
 
 [6]
+Overfull \hbox (20.21774pt too wide) in paragraph at lines 625--625
+[]\secfnt Implementation of Tem-po-ral Event Se-quences
+ []
+
 File: images/peakState.eps Graphic file (type eps)
- <images/peakState.eps>
+<images/peakState.eps> [7]
 File: images/lambda.eps Graphic file (type eps)
  <images/lambda.eps>
 File: images/detailAnalysis.eps Graphic file (type eps)
  <images/detailAnalysis.eps>
-Overfull \hbox (4.68027pt too wide) in paragraph at lines 759--760
+Overfull \hbox (4.68027pt too wide) in paragraph at lines 761--762
  [][] 
  []
 
-[7]
-Overfull \hbox (6.1425pt too wide) in paragraph at lines 771--772
-[]\T1/aer/m/n/9 Similarly, we can use PMML in-ter-preter like JP-MML within
- []
 
-
-Overfull \hbox (2.20172pt too wide) in paragraph at lines 793--794
+Overfull \hbox (2.20172pt too wide) in paragraph at lines 795--796
 []\T1/aer/m/n/9 Although there is much in-ter-est in re-al-time an-a-lyt-ics, m
 uch
  []
@@ -409,12 +431,12 @@ LaTeX Warning: There were multiply-defined labels.
 ### simple group (level 1) entered at line 357 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 3803 strings out of 493316
- 49058 string characters out of 6137930
- 151631 words of memory out of 5000000
- 7204 multiletter control sequences out of 15000+600000
+ 3802 strings out of 493316
+ 49041 string characters out of 6137930
+ 155631 words of memory out of 5000000
+ 7203 multiletter control sequences out of 15000+600000
  46389 words of font info for 61 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 39i,10n,40p,1222b,1573s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,10n,40p,1229b,1609s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on debs.dvi (9 pages, 68908 bytes).
+Output written on debs.dvi (9 pages, 69904 bytes).

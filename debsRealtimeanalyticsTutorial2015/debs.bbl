@@ -17,7 +17,7 @@ Cep tooling market survey.
 \newblock Accessed: 2015-05-02.
 
 \bibitem{Coral810patterns}
-Complex event processing: ten design patterns.
+Complex event processing: Ten design patterns.
 \newblock
   \url{http://complexevents.com/wp-content/uploads/2007/04/Coral8DesignPatterns.pdf}.
 \newblock Accessed: 2015-05-02.
@@ -97,7 +97,7 @@ T.~N. Bulkowski.
 G.~Cugola and A.~Margara.
 \newblock Processing flows of information: From data stream to complex event
   processing.
-\newblock {\em ACM Computing Surveys, 2011}.
+\newblock {\em ACM Computing Surveys, 2012}.
 
 \bibitem{eptsRefArch}
 A.~Paschke and P.~Vincent.

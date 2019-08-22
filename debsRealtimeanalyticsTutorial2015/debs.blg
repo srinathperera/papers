@@ -19,7 +19,7 @@ Warning--to sort, need author or key in siddhilib
 Warning--empty year in cugolaprocessing
 You've used 20 entries,
             2118 wiz_defined-function locations,
-            583 strings with 6218 characters,
+            583 strings with 6217 characters,
 and the built_in function-call counts, 4641 in all, are:
 = -- 451
 > -- 133
